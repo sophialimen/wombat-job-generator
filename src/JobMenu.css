@@ -16,21 +16,13 @@
   align-items: left;
 }
 
-.robot-settings-menu
+.menu-container
 {
-    padding-top: 30px;
-    
-}
-
-button
-{
-    margin: 5px;
-    padding: 10px;
-    width: 200px;
+    padding-top: 20px;
 }
 
 
-
+/*Robot Settings*/
 .info-row {
     display: flex;
     margin-bottom: 8px;
@@ -48,3 +40,244 @@ button
     text-align: right;
 }
 
+/*Predefined Tasks*/
+.task-button
+{
+    height:max-content;
+    padding: 10px 10px;
+    width: 200px;    
+}
+
+
+/*Queue Menu*/
+.queue-row
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+    margin-bottom: 10px;
+}
+
+.queue-button
+{
+    height: max-content;    
+    padding: 10px 10px;
+    width: 200px;
+    margin-right: 20px;
+}
+
+
+/*new*/
+.controls-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.main-button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.arrow-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.arrow-btn {
+    width: 24px;
+    height: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.arrow-btn:hover {
+    background: #f0f0f0;
+}
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid #333;
+}
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #333;
+}
+
+
+
+
+
+
+/*4*/
+/* Main container for the task list */
+.task-list-wrapper {
+    max-width: 28rem; /* 448px */
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Header styling */
+.task-list-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #1f2937;
+}
+
+.task-list-subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+/* Container for all task rows */
+.task-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Individual task row */
+.task-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.task-row:hover {
+    background: #f9fafb;
+    border-color: #9ca3af;
+}
+
+/* Left side content (number + task name) */
+.task-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.task-number {
+    font-weight: 600;
+    color: #374151;
+    min-width: 1.5rem;
+}
+
+.task-name {
+    color: #111827;
+    font-weight: 500;
+}
+
+/* Arrow controls container */
+.arrow-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem; /* 2px */
+}
+
+/* Individual arrow buttons */
+.arrow-btn {
+    width: 1.5rem;   /* 24px */
+    height: 1.25rem; /* 20px */
+    border: 1px solid #d1d5db;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.625rem; /* 10px */
+    color: #374151;
+    border-radius: 0.25rem;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.arrow-btn:hover:not(.disabled) {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+    color: #111827;
+}
+
+.arrow-btn:active:not(.disabled) {
+    background: #e5e7eb;
+    transform: scale(0.95);
+}
+
+/* Disabled state for arrows */
+.arrow-btn.disabled {
+    background: #f9fafb;
+    color: #d1d5db;
+    cursor: not-allowed;
+    border-color: #e5e7eb;
+}
+
+/* Summary section at the bottom */
+.task-summary {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #dbeafe;
+    border-radius: 0.375rem;
+}
+
+.task-summary-title {
+    font-weight: 500;
+    color: #1e40af;
+    margin-bottom: 0.5rem;
+}
+
+.task-summary-list {
+    font-size: 0.875rem;
+    color: #1e3a8a;
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.task-summary-list li {
+    margin-bottom: 0.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .task-list-wrapper {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+    
+    .task-row {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .task-content {
+        gap: 0.375rem;
+    }
+    
+    .arrow-controls {
+        gap: 0.25rem;
+    }
+}
