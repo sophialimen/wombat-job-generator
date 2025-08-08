@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+}
+
+.Main-Header
+{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-container
+{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 20px;
+}
+
+.column
+{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+
+
+
+
+
+
+
+.App-header {  
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
+
