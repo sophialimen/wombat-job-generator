@@ -1,85 +1,83 @@
 import './JobMenu.css';
 import React, { useState } from 'react';
+import { FaCaretDown, FaCaretUp, FaPause, FaPlay, FaStop } from 'react-icons/fa';
 
 const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion }) => {
 
-    //for receiving from API and tracking state while in menu
-    const [queue1, setQueue1] = useState([]); 
-
-    const data = [
-        { order: 1, job: "Go to Delivery pt 1", status: "Executing"},
-        { order: 2, job: "Go to Charging", status: "Waiting"}
+    //get from API - robot job queue information (order, task name, status)
+    const queuedTaskInfo = [
+        { order: 1, job: "Go to Delivery Point 1", status: "Executing" },
+        { order: 2, job: "Go to Charging", status: "Waiting" }
     ]
 
-    const [selectedRow, setSelectedRow] = useState(null);
+    const [selectedQueueRow, setSelectedQueueRow] = useState(null);
+    const [selectedTask, setSelectedTask] = useState([]);
+
+    const predefinedTaskInfo = [
+        { taskName: "Go to Home" },
+        { taskName: "Go to Charging Station" },
+        { taskName: "Go to Loading Station" }        
+    ]
 
 
     return (
         <div>
-
-            <div className='flex-container1'>
-
-                <div className='column'>
-                    <h3>Job Menu</h3>
-
-                    <div className='menu-container'>
-
+            {/*Three Columns Menu*/}
+            <div className='menu-container'>
+                <div className='three-column-container'>
+                    {/* Job Menu - Section */}
+                    <div className='column'>
+                        <h3>Job Menu</h3>
                         <table>
                             <tr>
                                 <th>Queue No.</th>
                                 <th>Job</th>
                                 <th>Status</th>
                             </tr>
-                            {data.map((val, key) => {
+                            {queuedTaskInfo.map((val, key) => {
                                 return (
-                                    <tr className='table-row' 
-                                    key={key} 
-                                    onClick={()=>setSelectedRow(key)}
-                                    style={{backgroundColor: selectedRow === key? 'lightblue' : 'transparent'}}
+                                    <tr key={key}
+                                        onClick={() => setSelectedQueueRow(key)}
+                                        style={{ backgroundColor: selectedQueueRow === key ? 'lightblue' : 'transparent' }}
                                     >
-                                        <td>{val.order}</td>
-                                        <td>{val.job}</td>
-                                        <td>{val.status}</td>
-                                        <td><div className="arrow-container">
-                                            <button className="arrow-btn">
-                                                <div className="triangle-up"></div>
-                                            </button>
-                                            <button className="arrow-btn">
-                                                <div className="triangle-down"></div>
-                                            </button>
-                                        </div></td>
+                                        <td className='td-queue'>{val.order}</td>
+                                        <td className='td-queue'>{val.job}</td>
+                                        <td className='td-queue'>{val.status}</td>
+                                        <td style={{ paddingLeft: '10px' }}>
+                                            <div className="arrow-container">                                                
+                                                    <button className='button-arrow'><FaCaretUp /></button>
+                                                    <button className='button-arrow'><FaCaretDown /></button>                                                                                                
+                                            </div>
+                                        </td>
                                     </tr>
                                 )
                             })}
                         </table>
-
                     </div>
 
+                    {/* Predefined Tasks - Section */}
+                    <div className='column'>
+                        <h3>Predefined Tasks</h3>
 
-                </div>
-
-
-                <div className='column'>
-                    <h3>Predefined Tasks</h3>
-
-                    <div className="menu-container">
-                        <div className="info-row">
-                            <button className='task-button'>Go to Home</button>
-                        </div>
-                        <div className="info-row">
-                            <button className='task-button'>Go to Charging Station</button>
-                        </div>
-                        <div className="info-row">
-                            <button className='task-button'>Go to Delivery Point 1</button>
-                        </div>
+                        <table>
+                            {predefinedTaskInfo.map((val, key) => {
+                                return (
+                                    <tr key={key}
+                                        onClick={() => setSelectedTask(key)}
+                                        style={{ backgroundColor: selectedTask === key ? 'lightblue' : 'transparent' }}
+                                    >
+                                        <td className='td-task'>{val.taskName}</td>
+                                    </tr>
+                                )
+                            })}
+                            
+                        </table>
                     </div>
-                </div>
 
+                    {/* Robot Settings - Section */}
+                    <div className='column'>
+                        <h3>Robot Settings</h3>
 
-                <div className='column'>
-                    <h3>Robot Settings</h3>
-
-                    <div className="menu-container">
                         <div className="info-row">
                             <span className="info-label">Selected Robot:</span>
                             <span className="info-value">{selectedRobot}</span>
@@ -88,13 +86,30 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                             <span className="info-label">Robot Battery Level:</span>
                             <span className="info-value">90%</span>
                         </div>
+
                     </div>
-
-
-
                 </div>
 
+
+                {/*Bottom Row of management buttons*/}
+                <div className='three-column-container'>
+
+                    <div className='gridrow-controlButtons'>
+                        <button><FaPlay /> Run</button>
+                        <button><FaPause /> Pause</button>
+                        <button><FaStop/> Stop</button>
+                        <button>Remove (abort)</button>
+                    </div>
+
+                    
+                    <div className='gridrow-taskButtons'>
+                        <button className='button-Task'>Create New Task</button>
+                        <button className='button-Task'>Add to Queue</button>
+                    </div>
+                </div>
             </div>
+
+
 
 
 
