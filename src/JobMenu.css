@@ -1,58 +1,45 @@
-.menu-container 
-{
-    background-color: rgb(34, 34, 107);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.three-column-container
+.two-column-container
 {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    padding: 10px;
-    padding-top: 0;  
+    grid-template-columns: 2fr 1fr;
+    margin: 10px;       
 }
 
-.column
+.two-column-container2
 {
-  padding: 10px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;        
 }
 
-/*Robot Settings*/
-.info-row 
+.column-colour
 {
-    display: flex;
-    margin-bottom: 8px;
-    color: white
+    margin: 10px;
+    padding:10px;
+    background-color: #1e40af;;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
 }
 
-.info-label 
+.robot-setting-section
 {
-    width: 180px;
-    font-weight: bold;
-    text-align: left;
+    background-color: olive;
+    margin:10px;
 }
 
-.info-value {
-    flex: 1;
-    text-align: right;
-}
-
-/*Table Styling*/
-table
+.tableNew
 {
     border: 1px solid darkgray;
     padding: 5px;
-    background-color: azure;
+    background-color: transparent;
+    margin:0;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 th
 {
     border-bottom: 1px solid darkgray;
-    padding: 10px;    
+    padding: 10px; 
 }
 
 .td-queue
@@ -64,6 +51,12 @@ th
     overflow: auto;
 }
 
+.td-queue-arrow
+{
+    padding-left: 10px;
+    border-top: 1px solid darkgray;
+}
+
 .td-task
 {
     border-bottom: 1px solid darkgray;
@@ -73,21 +66,21 @@ th
     overflow: auto;
 }
 
-/*Buttons*/
-.gridrow-controlButtons
+
+.gridrow-controlButtons2
 {    
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 3fr;
-    margin: 10px;
+    margin-top: 30px;
 }
 
-.gridrow-taskButtons
+.gridrow-taskButtons2
 {
     display: grid;
     grid-template-rows: 1fr 1fr;
-    margin: 10px;  
-    margin-left: 5px;    
+    margin-top: 30px;  
+       
 }
 
 button
@@ -103,12 +96,18 @@ button:hover
     background: #f0f0f0;
 }
 
-.button-Task
+.button-Task2
 {
     height: 25px;
     width: 100%;
+    border-radius: 4px;
 }
 
+
+.button-Queue2
+{    
+    border-radius: 4px;
+}
 
 /* arrow */
 .arrow-container
@@ -120,10 +119,29 @@ button:hover
 .button-arrow 
 {
     width: 24px;
-    height: 20px;    
+    height: 15px;    
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: auto;
 }
 
+/*Robot Settings*/
+.info-row 
+{
+    display: flex;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.info-label 
+{
+    width: 180px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.info-value {
+    flex: 1;
+    text-align: right;
+}

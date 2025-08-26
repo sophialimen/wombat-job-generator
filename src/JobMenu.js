@@ -16,99 +16,95 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
     const predefinedTaskInfo = [
         { taskName: "Go to Home" },
         { taskName: "Go to Charging Station" },
-        { taskName: "Go to Loading Station" }        
+        { taskName: "Go to Loading Station" }
     ]
 
 
     return (
         <div>
-            {/*Three Columns Menu*/}
-            <div className='menu-container'>
-                <div className='three-column-container'>
-                    {/* Job Menu - Section */}
-                    <div className='column'>
-                        <h3>Job Menu</h3>
-                        <table>
-                            <tr>
-                                <th>Queue No.</th>
-                                <th>Job</th>
-                                <th>Status</th>
-                            </tr>
-                            {queuedTaskInfo.map((val, key) => {
-                                return (
-                                    <tr key={key}
-                                        onClick={() => setSelectedQueueRow(key)}
-                                        style={{ backgroundColor: selectedQueueRow === key ? 'lightblue' : 'transparent' }}
-                                    >
-                                        <td className='td-queue'>{val.order}</td>
-                                        <td className='td-queue'>{val.job}</td>
-                                        <td className='td-queue'>{val.status}</td>
-                                        <td style={{ paddingLeft: '10px' }}>
-                                            <div className="arrow-container">                                                
+            {/* New concept */}
+            <div className='two-column-container'>
+                <div>
+                    <div className='two-column-container2'>
+                        <div className='column-colour'>
+                            <h3>Job Menu</h3>
+                            <table className='tableNew'>
+                                <tr>
+                                    <th className='th-New'>Queue No.</th>
+                                    <th className='th-New'>Job</th>
+                                    <th className='th-New'>Status</th>
+                                </tr>
+                                {queuedTaskInfo.map((val, key) => {
+                                    return (
+                                        <tr key={key}
+                                            onClick={() => setSelectedQueueRow(key)}
+                                            style={{ backgroundColor: selectedQueueRow === key ? 'lightblue' : 'transparent' }}
+                                        >
+                                            <td className='td-queue'>{val.order}</td>
+                                            <td className='td-queue'>{val.job}</td>
+                                            <td className='td-queue'>{val.status}</td>
+                                            <td className='td-queue-arrow'>
+                                                <div className="arrow-container">
                                                     <button className='button-arrow'><FaCaretUp /></button>
-                                                    <button className='button-arrow'><FaCaretDown /></button>                                                                                                
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </table>
-                    </div>
+                                                    <button className='button-arrow'><FaCaretDown /></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </table>
 
-                    {/* Predefined Tasks - Section */}
-                    <div className='column'>
-                        <h3>Predefined Tasks</h3>
+                            <div className='gridrow-controlButtons2'>
+                                <button className='button-Queue2'><FaPlay /> Run</button>
+                                <button className='button-Queue2'><FaPause /> Pause</button>
+                                <button className='button-Queue2'><FaStop /> Stop</button>
+                                <button className='button-Queue2'>Remove (abort)</button>
+                            </div>
 
-                        <table>
-                            {predefinedTaskInfo.map((val, key) => {
-                                return (
-                                    <tr key={key}
-                                        onClick={() => setSelectedTask(key)}
-                                        style={{ backgroundColor: selectedTask === key ? 'lightblue' : 'transparent' }}
-                                    >
-                                        <td className='td-task'>{val.taskName}</td>
-                                    </tr>
-                                )
-                            })}
-                            
-                        </table>
-                    </div>
-
-                    {/* Robot Settings - Section */}
-                    <div className='column'>
-                        <h3>Robot Settings</h3>
-
-                        <div className="info-row">
-                            <span className="info-label">Selected Robot:</span>
-                            <span className="info-value">{selectedRobot}</span>
                         </div>
-                        <div className="info-row">
-                            <span className="info-label">Robot Battery Level:</span>
-                            <span className="info-value">90%</span>
-                        </div>
+                        <div className='column-colour'>
+                            <h3>Predefined Tasks</h3>
 
+                            <table className='tableNew'>
+                                {predefinedTaskInfo.map((val, key) => {
+                                    return (
+                                        <tr key={key}
+                                            onClick={() => setSelectedTask(key)}
+                                            style={{ backgroundColor: selectedTask === key ? 'lightblue' : 'transparent' }}
+                                        >
+                                            <td className='td-task'>{val.taskName}</td>
+                                        </tr>
+                                    )
+                                })}
+
+                            </table>
+
+                            <div className='gridrow-taskButtons2'>
+                                <button className='button-Task2'>Create New Task</button>
+                                <button className='button-Task2'>Add to Queue</button>
+                            </div>
+
+                        </div>
                     </div>
+
                 </div>
 
 
-                {/*Bottom Row of management buttons*/}
-                <div className='three-column-container'>
+                <div className='column-colour'>
+                    <h3>Robot Settings</h3>
 
-                    <div className='gridrow-controlButtons'>
-                        <button><FaPlay /> Run</button>
-                        <button><FaPause /> Pause</button>
-                        <button><FaStop/> Stop</button>
-                        <button>Remove (abort)</button>
+                    <div className="info-row">
+                        <span className="info-label">Selected Robot:</span>
+                        <span className="info-value">{selectedRobot}</span>
                     </div>
-
-                    
-                    <div className='gridrow-taskButtons'>
-                        <button className='button-Task'>Create New Task</button>
-                        <button className='button-Task'>Add to Queue</button>
+                    <div className="info-row">
+                        <span className="info-label">Robot Battery Level:</span>
+                        <span className="info-value">90%</span>
                     </div>
                 </div>
+
+                
             </div>
-
 
 
 
