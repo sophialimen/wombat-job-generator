@@ -8,6 +8,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
     const queuedTaskInfo = [
         { order: 1, job: "Go to Delivery Point 1", status: "Executing" },
         { order: 2, job: "Go to Charging", status: "Waiting" }
+   
     ]
 
     const [selectedQueueRow, setSelectedQueueRow] = useState(null);
@@ -16,7 +17,9 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
     const predefinedTaskInfo = [
         { taskName: "Go to Home" },
         { taskName: "Go to Charging Station" },
-        { taskName: "Go to Loading Station" }
+        { taskName: "Go to Loading Station" },
+        { taskName: "Go to Unloading Station" }
+      
     ]
 
 
@@ -28,13 +31,17 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                     <div className='two-column-container2'>
                         <div className='column-colour'>
                             <h3>Job Menu</h3>
-                            <table className='tableNew'>
-                                <tr>
-                                    <th className='th-New'>Queue No.</th>
-                                    <th className='th-New'>Job</th>
-                                    <th className='th-New'>Status</th>
-                                </tr>
-                                {queuedTaskInfo.map((val, key) => {
+                            <table className='tableList'>
+                                <thead>
+                                    <tr>
+                                        <th className='th-New'>Queue No.</th>
+                                        <th className='th-New'>Job</th>
+                                        <th className='th-New'>Status</th>
+                                        <th className='th-New'>Rearrange</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {queuedTaskInfo.map((val, key) => {
                                     return (
                                         <tr key={key}
                                             onClick={() => setSelectedQueueRow(key)}
@@ -52,20 +59,21 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                                         </tr>
                                     )
                                 })}
+                                </tbody>                                
                             </table>
 
                             <div className='gridrow-controlButtons2'>
-                                <button className='button-Queue2'><FaPlay /> Run</button>
-                                <button className='button-Queue2'><FaPause /> Pause</button>
-                                <button className='button-Queue2'><FaStop /> Stop</button>
-                                <button className='button-Queue2'>Remove (abort)</button>
+                                <button><FaPlay /> Run</button>
+                                <button><FaPause /> Pause</button>
+                                <button><FaStop /> Stop</button>
+                                <button>Remove (abort)</button>
                             </div>
 
                         </div>
                         <div className='column-colour'>
                             <h3>Predefined Tasks</h3>
 
-                            <table className='tableNew'>
+                            <table className='tableList'>
                                 {predefinedTaskInfo.map((val, key) => {
                                     return (
                                         <tr key={key}
@@ -90,7 +98,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                 </div>
 
 
-                <div className='column-colour'>
+                <div className='column-colour' style={{height:'500px'}}>
                     <h3>Robot Settings</h3>
 
                     <div className="info-row">

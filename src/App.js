@@ -40,26 +40,9 @@ function App()
           selectedSite={selectedSite}
           selectedRegion={selectedRegion}
         />
-      )}
+      )}      
 
       
-
-      
-      
-      
-
-      <header className="App-header">        
-        
-        <button 
-          type="submit"
-          value="Submit"
-          onClick={(e) => handleSubmit(e)}
-          >Submit</button>
-        
-      </header>
-
-
-
 
     </div>
   );
