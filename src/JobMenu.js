@@ -1,5 +1,5 @@
 import './JobMenu.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaCaretDown, FaCaretUp, FaPause, FaPlay, FaStop } from 'react-icons/fa';
 
 const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion }) => {
@@ -19,6 +19,19 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
         { taskName: "Go to Loading Station" },
         { taskName: "Go to Unloading Station" }      
     ]
+
+    //
+    useEffect(()=> {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('tr') && !(event.target.closest('button')))
+            {
+                setSelectedQueueRow(null);
+                setSelectedTask(null);
+            }
+        };
+        document.addEventListener('click',handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
 
 
     return (

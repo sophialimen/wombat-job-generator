@@ -1,11 +1,12 @@
 import './App.css';
 import RobotSelector from './robotSelector.js';
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { coreData } from "./data.js";
 import Menu from './JobMenu.js'; 
 
 function App() 
 {    
+  /*Robot Selection states*/
   const [selectedrobot, setSelectedRobot] = useState("");
   const [selectedBuilding, setSelectedBuilding] = useState("");
   const [selectedSite, setSelectedSite] = useState("");
@@ -38,7 +39,7 @@ function App()
           selectedRobot={selectedrobot}
           selectedBuilding={selectedBuilding}
           selectedSite={selectedSite}
-          selectedRegion={selectedRegion}
+          selectedRegion={selectedRegion}          
         />
       )}      
 
