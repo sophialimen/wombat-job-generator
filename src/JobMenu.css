@@ -106,6 +106,18 @@ button
     border-radius: 4px;
 }
 
+button:disabled
+{
+    background-color: #9ca3af;
+    opacity: 0.5;
+    cursor: not-allowed ;
+}
+
+button:disabled:hover 
+{
+    background-color: #9ca3af;
+}
+
 button:hover 
 {
     background: #f0f0f0;

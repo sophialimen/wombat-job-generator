@@ -11,7 +11,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
     ]
 
     const [selectedQueueRow, setSelectedQueueRow] = useState(null);
-    const [selectedTask, setSelectedTask] = useState([]);
+    const [selectedTask, setSelectedTask] = useState(null);
 
     const predefinedTaskInfo = [
         { taskName: "Go to Home" },
@@ -20,7 +20,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
         { taskName: "Go to Unloading Station" }      
     ]
 
-    //
+    //de-select options - outside click
     useEffect(()=> {
         const handleClickOutside = (event) => {
             if (!event.target.closest('tr') && !(event.target.closest('button')))
@@ -33,6 +33,65 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
         return () => document.removeEventListener('click', handleClickOutside);
     }, []);
 
+
+    //enable or disable buttons depending on task selected
+    const getQueueButtonStates = () => 
+    {
+        if (selectedQueueRow === null)
+        {
+            return {
+                run: false,
+                pause: false,
+                stop: false,
+                remove: false
+            };
+        }
+
+        const selectedQueuedTask = queuedTaskInfo[selectedQueueRow];
+        const isFirstInQueue = selectedQueuedTask.order === 1;
+
+        switch (selectedQueuedTask.status)
+        {
+            case "Executing":
+                return {
+                    run:false,
+                    pause: true,
+                    stop: true,
+                    remove: true
+                };
+            case "Waiting":
+                return {
+                    run: isFirstInQueue,
+                    pause: false,
+                    stop: false,
+                    remove: true
+                };
+            default:
+                return {
+                    run: false,
+                    pause: false,
+                    stop: false,
+                    remove: false 
+                };
+        }
+    };
+
+    const getTaskButtonStates = () =>
+    {
+        if (selectedTask ===  null)
+        {
+            return {add: false};
+        }
+        
+        if (selectedTask != null)
+        {
+            return {add: true};
+        }           
+
+    };
+
+    const queueButtonState = getQueueButtonStates();
+    const taskButtonState = getTaskButtonStates();
 
     return (
         <div>
@@ -74,10 +133,10 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                             </table>
 
                             <div className='gridrow-controlButtons2'>
-                                <button><FaPlay /> Run</button>
-                                <button><FaPause /> Pause</button>
-                                <button><FaStop /> Stop</button>
-                                <button>Remove (abort)</button>
+                                <button disabled={!queueButtonState.run}><FaPlay /> Run</button>
+                                <button disabled={!queueButtonState.pause}><FaPause /> Pause</button>
+                                <button disabled={!queueButtonState.stop}><FaStop /> Stop</button>
+                                <button disabled={!queueButtonState.remove}>Remove (abort)</button>
                             </div>
 
                         </div>
@@ -100,7 +159,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
 
                             <div className='gridrow-taskButtons2'>
                                 <button className='button-Task2'>Create New Task</button>
-                                <button className='button-Task2'>Add to Queue</button>
+                                <button className='button-Task2' disabled={!taskButtonState.add}>Add to Queue</button>
                             </div>
 
                         </div>
