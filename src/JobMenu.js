@@ -100,8 +100,18 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                                 >
                                     <FaPause /> Pause
                                 </button>
-                                <button disabled={!queueButtonState.stop}><FaStop /> Stop</button>
-                                <button disabled={!queueButtonState.remove}>Remove (abort)</button>
+                                <button 
+                                disabled={!queueButtonState.stop}
+                                onClick={()=>FunctionMethods.pauseButtonClicked(queueTaskData, selectedQueueRow, setQueueTaskData)}
+                                >
+                                    <FaStop /> Stop
+                                </button>
+                                <button 
+                                disabled={!queueButtonState.remove}
+                                onClick={()=>FunctionMethods.abortJob()}
+                                >
+                                    Remove (abort)
+                                </button>
                             </div>
 
                         </div>

@@ -80,7 +80,7 @@ export const runButtonClicked = (_queueTaskData, _selectedQueueRow, _setQueueTas
         console.log("queueTaskData is undefined!");
         return;  // Exit early if no data
     }
-    
+
     const updatedQueue = _queueTaskData.map((task, index) => {
         if (index === _selectedQueueRow) {
             return {
@@ -120,13 +120,20 @@ export const pauseButtonClicked = (_queueTaskData, _selectedQueueRow, _setQueueT
     _setQueueTaskData(updatedQueue);    
 };
 
+export const abortJob = () =>
+{
+    console.log("Job deleted");
+
+};
+
 
 export default {
     getQueueButtonStates,
     getTaskSelectState,
     getQueueStates,
     runButtonClicked,
-    pauseButtonClicked
+    pauseButtonClicked,
+    abortJob
 };
 
 
