@@ -7,8 +7,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
     //get from API - robot job queue information (order, task name, status)
     const queuedTaskInfo = [
         { order: 1, job: "Go to Delivery Point 1", status: "Executing" },
-        { order: 2, job: "Go to Charging", status: "Waiting" }
-   
+        { order: 2, job: "Go to Charging", status: "Waiting" }   
     ]
 
     const [selectedQueueRow, setSelectedQueueRow] = useState(null);
@@ -18,8 +17,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
         { taskName: "Go to Home" },
         { taskName: "Go to Charging Station" },
         { taskName: "Go to Loading Station" },
-        { taskName: "Go to Unloading Station" }
-      
+        { taskName: "Go to Unloading Station" }      
     ]
 
 
@@ -110,13 +108,8 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                         <span className="info-value">90%</span>
                     </div>
                 </div>
-
                 
             </div>
-
-
-
-
         </div>
     );
 
