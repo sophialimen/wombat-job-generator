@@ -1,24 +1,18 @@
 import './JobMenu.css';
-import React, { useState, useEffect } from 'react';
+import { TaskData } from './data.js'
+import { useState, useEffect } from 'react';
 import { FaCaretDown, FaCaretUp, FaPause, FaPlay, FaStop } from 'react-icons/fa';
+import FunctionMethods from './FunctionMethods.js';
 
 const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion }) => {
 
     //get from API - robot job queue information (order, task name, status)
-    const queuedTaskInfo = [
-        { order: 1, job: "Go to Delivery Point 1", status: "Executing" },
-        { order: 2, job: "Go to Charging", status: "Waiting" }   
-    ]
+    const queuedTaskInfo = TaskData.queuedTaskInfo;
+    const presetTaskInfo = TaskData.predefinedTaskInfo;    
 
+    //set the task lists in the Queue and Pre-defined list
     const [selectedQueueRow, setSelectedQueueRow] = useState(null);
-    const [selectedTask, setSelectedTask] = useState(null);
-
-    const predefinedTaskInfo = [
-        { taskName: "Go to Home" },
-        { taskName: "Go to Charging Station" },
-        { taskName: "Go to Loading Station" },
-        { taskName: "Go to Unloading Station" }      
-    ]
+    const [selectedTask, setSelectedTask] = useState(null);    
 
     //de-select options - outside click
     useEffect(()=> {
@@ -35,67 +29,15 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
 
 
     //enable or disable buttons depending on task selected
-    const getQueueButtonStates = () => 
-    {
-        if (selectedQueueRow === null)
-        {
-            return {
-                run: false,
-                pause: false,
-                stop: false,
-                remove: false
-            };
-        }
-
-        const selectedQueuedTask = queuedTaskInfo[selectedQueueRow];
-        const isFirstInQueue = selectedQueuedTask.order === 1;
-
-        switch (selectedQueuedTask.status)
-        {
-            case "Executing":
-                return {
-                    run:false,
-                    pause: true,
-                    stop: true,
-                    remove: true
-                };
-            case "Waiting":
-                return {
-                    run: isFirstInQueue,
-                    pause: false,
-                    stop: false,
-                    remove: true
-                };
-            default:
-                return {
-                    run: false,
-                    pause: false,
-                    stop: false,
-                    remove: false 
-                };
-        }
-    };
-
-    const getTaskButtonStates = () =>
-    {
-        if (selectedTask ===  null)
-        {
-            return {add: false};
-        }
-        
-        if (selectedTask != null)
-        {
-            return {add: true};
-        }           
-
-    };
-
-    const queueButtonState = getQueueButtonStates();
-    const taskButtonState = getTaskButtonStates();
+    const queueButtonState = FunctionMethods.getQueueButtonStates({ 
+        selectedQueueRow, 
+        queuedTaskInfo
+    });
+    
+    const taskButtonState = FunctionMethods.getTaskSelectState({selectedTask});
 
     return (
-        <div>
-            {/* New concept */}
+        <div>            
             <div className='two-column-container'>
                 <div>
                     <div className='two-column-container2'>
@@ -119,7 +61,11 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                                         >
                                             <td className='td-queue'>{val.order}</td>
                                             <td className='td-queue'>{val.job}</td>
-                                            <td className='td-queue'>{val.status}</td>
+                                            <td className='td-queue' 
+                                                style={{backgroundColor: FunctionMethods.getQueueStates(val.status).colour}}>
+                                                {val.status}
+                                            </td>
+                                            
                                             <td className='td-queue-arrow'>
                                                 <div className="arrow-container">
                                                     <button className='button-arrow'><FaCaretUp /></button>
@@ -144,7 +90,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                             <h3>Predefined Tasks</h3>
 
                             <table className='tableList'>
-                                {predefinedTaskInfo.map((val, key) => {
+                                {presetTaskInfo.map((val, key) => {
                                     return (
                                         <tr key={key}
                                             onClick={() => setSelectedTask(key)}

@@ -29,3 +29,20 @@ export const coreData =
     "HCM Building 1": ["Robot-HCM-001", "Robot-HCM-002"]
   }
 };
+
+
+export const TaskData = {
+  queuedTaskInfo: [
+    { order: 1, job: "Go to Delivery Point 1", status: "Executing" },
+    { order: 2, job: "Go to Charging", status: "Waiting" }
+  ],
+
+  predefinedTaskInfo: [
+    { taskName: "Go to Home" },
+    { taskName: "Go to Charging Station" },
+    { taskName: "Go to Loading Station" },
+    { taskName: "Go to Unloading Station" }
+  ]
+
+};
+
