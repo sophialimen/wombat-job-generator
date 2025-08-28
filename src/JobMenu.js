@@ -6,14 +6,24 @@ import FunctionMethods from './FunctionMethods.js';
 
 const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion }) => {
 
+    //Set states for Job Queues (list)
+    const [queueTaskData, setQueueTaskData] = useState([]);
+
     //get from API - robot job queue information (order, task name, status)
-    const queuedTaskInfo = TaskData.queuedTaskInfo;
-    const presetTaskInfo = TaskData.predefinedTaskInfo;    
+    const queuedTaskList = TaskData.queuedTaskInfo;
+    const presetTaskList = TaskData.predefinedTaskInfo;  
 
-    //set the task lists in the Queue and Pre-defined list
+    //setting job queue data(list) from API
+    useEffect (()=> {
+        setQueueTaskData(queuedTaskList);
+    }, [queuedTaskList]);
+
+    //monitor selected row from Job Queue List and Preset job instruction list
     const [selectedQueueRow, setSelectedQueueRow] = useState(null);
-    const [selectedTask, setSelectedTask] = useState(null);    
+    const [selectedTask, setSelectedTask] = useState(null);   
 
+
+    /* Functions for Menu */
     //de-select options - outside click
     useEffect(()=> {
         const handleClickOutside = (event) => {
@@ -30,10 +40,9 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
 
     //enable or disable buttons depending on task selected
     const queueButtonState = FunctionMethods.getQueueButtonStates({ 
-        selectedQueueRow, 
-        queuedTaskInfo
-    });
-    
+        _selectedQueueRow: selectedQueueRow, 
+        _queueTaskData: queueTaskData
+    });    
     const taskButtonState = FunctionMethods.getTaskSelectState({selectedTask});
 
     return (
@@ -53,7 +62,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {queuedTaskInfo.map((val, key) => {
+                                    {queueTaskData.map((val, key) => {
                                     return (
                                         <tr key={key}
                                             onClick={() => setSelectedQueueRow(key)}
@@ -79,8 +88,18 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                             </table>
 
                             <div className='gridrow-controlButtons2'>
-                                <button disabled={!queueButtonState.run}><FaPlay /> Run</button>
-                                <button disabled={!queueButtonState.pause}><FaPause /> Pause</button>
+                                <button 
+                                disabled={!queueButtonState.run}
+                                onClick={()=>FunctionMethods.runButtonClicked(queueTaskData, selectedQueueRow, setQueueTaskData)}
+                                >
+                                    <FaPlay /> Run
+                                </button>
+                                <button 
+                                disabled={!queueButtonState.pause}
+                                onClick={()=>FunctionMethods.pauseButtonClicked(queueTaskData, selectedQueueRow, setQueueTaskData)}
+                                >
+                                    <FaPause /> Pause
+                                </button>
                                 <button disabled={!queueButtonState.stop}><FaStop /> Stop</button>
                                 <button disabled={!queueButtonState.remove}>Remove (abort)</button>
                             </div>
@@ -90,7 +109,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                             <h3>Predefined Tasks</h3>
 
                             <table className='tableList'>
-                                {presetTaskInfo.map((val, key) => {
+                                {presetTaskList.map((val, key) => {
                                     return (
                                         <tr key={key}
                                             onClick={() => setSelectedTask(key)}
