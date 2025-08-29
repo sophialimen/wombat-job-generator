@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { coreData } from "./data.js";
-import Menu from './JobMenu.js';
 import './robotSelector.css'; 
 
 const RobotSelector = ({ onSelectionChange }) => {

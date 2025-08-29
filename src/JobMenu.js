@@ -20,7 +20,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
 
     //monitor selected row from Job Queue List and Preset job instruction list
     const [selectedQueueRow, setSelectedQueueRow] = useState(null);
-    const [selectedTask, setSelectedTask] = useState(null);   
+    const [selectedTaskIndex, setSelectedTask] = useState(null);   
 
 
     /* Functions for Menu */
@@ -43,7 +43,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
         _selectedQueueRow: selectedQueueRow, 
         _queueTaskData: queueTaskData
     });    
-    const taskButtonState = FunctionMethods.getTaskSelectState({selectedTask});
+    const taskButtonState = FunctionMethods.getTaskSelectState({selectedTask: selectedTaskIndex});
 
     return (
         <div>            
@@ -90,26 +90,30 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                             <div className='gridrow-controlButtons2'>
                                 <button 
                                 disabled={!queueButtonState.run}
-                                onClick={()=>FunctionMethods.runButtonClicked(queueTaskData, selectedQueueRow, setQueueTaskData)}
+                                onClick={()=>FunctionMethods.runButtonClicked(queueTaskData, setQueueTaskData, selectedQueueRow)}
                                 >
                                     <FaPlay /> Run
                                 </button>
                                 <button 
                                 disabled={!queueButtonState.pause}
-                                onClick={()=>FunctionMethods.pauseButtonClicked(queueTaskData, selectedQueueRow, setQueueTaskData)}
+                                onClick={()=>FunctionMethods.pauseButtonClicked(queueTaskData, setQueueTaskData, selectedQueueRow)}
                                 >
                                     <FaPause /> Pause
                                 </button>
                                 <button 
                                 disabled={!queueButtonState.stop}
-                                onClick={()=>FunctionMethods.pauseButtonClicked(queueTaskData, selectedQueueRow, setQueueTaskData)}
+                                onClick={()=> {
+                                    console.log("about to call abortJob", setQueueTaskData, setSelectedQueueRow);
+                                    FunctionMethods.pauseButtonClicked(queueTaskData, setQueueTaskData, selectedQueueRow, setSelectedQueueRow);}
+                                }
                                 >
                                     <FaStop /> Stop
                                 </button>
-                                <button 
-                                disabled={!queueButtonState.remove}
-                                onClick={()=>FunctionMethods.abortJob()}
-                                >
+                                <button
+                                    disabled={!queueButtonState.remove}
+                                    onClick={() => {                                        
+                                        FunctionMethods.abortJob(queueTaskData, setQueueTaskData, selectedQueueRow, setSelectedQueueRow);
+                                    }}>
                                     Remove (abort)
                                 </button>
                             </div>
@@ -123,7 +127,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                                     return (
                                         <tr key={key}
                                             onClick={() => setSelectedTask(key)}
-                                            style={{ backgroundColor: selectedTask === key ? 'lightblue' : 'transparent' }}
+                                            style={{ backgroundColor: selectedTaskIndex === key ? 'lightblue' : 'transparent' }}
                                         >
                                             <td className='td-task'>{val.taskName}</td>
                                         </tr>
@@ -134,9 +138,11 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
 
                             <div className='gridrow-taskButtons2'>
                                 <button className='button-Task2'>Create New Task</button>
-                                <button className='button-Task2' disabled={!taskButtonState.add}>Add to Queue</button>
+                                <button className='button-Task2' 
+                                disabled={!taskButtonState.add}
+                                onClick={()=>FunctionMethods.addJob(queueTaskData, setQueueTaskData, selectedQueueRow, setSelectedQueueRow, selectedTaskIndex, presetTaskList)}
+                                >Add to Queue</button>
                             </div>
-
                         </div>
                     </div>
 

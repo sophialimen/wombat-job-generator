@@ -1,7 +1,7 @@
 import './App.css';
 import RobotSelector from './robotSelector.js';
-import { React, useEffect, useState } from "react";
-import { coreData } from "./data.js";
+import { useState } from "react";
+
 import Menu from './JobMenu.js'; 
 
 function App() 
@@ -12,12 +12,13 @@ function App()
   const [selectedSite, setSelectedSite] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
 
-  
+  /*
   const handleSubmit = (e) => {
         e.preventDefault();
         //console.log(selectedRegionOption);
         // Add your form submission logic here
     };
+    */
 
 
   /* return html format */

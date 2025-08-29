@@ -74,7 +74,7 @@ export const getTaskSelectState = ({ selectedTask }) => {
      }
 };
 
-export const runButtonClicked = (_queueTaskData, _selectedQueueRow, _setQueueTaskData) =>
+export const runButtonClicked = (_queueTaskData, _setQueueTaskData, _selectedQueueRow) =>
 {
     if (!_queueTaskData) {
         console.log("queueTaskData is undefined!");
@@ -97,7 +97,7 @@ export const runButtonClicked = (_queueTaskData, _selectedQueueRow, _setQueueTas
     _setQueueTaskData(updatedQueue);    
 };
 
-export const pauseButtonClicked = (_queueTaskData, _selectedQueueRow, _setQueueTaskData) =>
+export const pauseButtonClicked = (_queueTaskData, _setQueueTaskData, _selectedQueueRow) =>
 {
     if (!_queueTaskData) {
         console.log("queueTaskData is undefined!");
@@ -118,13 +118,55 @@ export const pauseButtonClicked = (_queueTaskData, _selectedQueueRow, _setQueueT
     });
 
     _setQueueTaskData(updatedQueue);    
+    console.log(updatedQueue);
 };
 
-export const abortJob = () =>
+export const abortJob = (_queueTaskData, _setQueueTaskData, _selectedQueueRow, _setSelectedQueueRow) =>
+{    
+    const newQueueList = [..._queueTaskData];
+    newQueueList.splice(_selectedQueueRow, 1);  //splice(startingIndex, deleteCount)  
+
+    const updatedQueue = newQueueList.map ((task, index) => ({
+        ...task,
+        order: index + 1
+
+    }));
+
+    _setSelectedQueueRow(null);
+    _setQueueTaskData(updatedQueue);
+};
+
+export const addJob = (_queueTaskData, _setQueueTaskData, _selectedQueueRow, _setSelectedQueueRow, _selectedTaskIndex, _presetTaskList) =>
 {
-    console.log("Job deleted");
+    if (_selectedQueueRow === null)
+        return;
 
-};
+    //copy of Queue List
+    const newQueueList = [..._queueTaskData];
+    
+    //get new Task Details
+    const newJobName = _presetTaskList[_selectedTaskIndex].taskName;
+    const addJobToList = {
+        order: _selectedQueueRow+1,
+        job: newJobName,
+        status: "Idle"
+    };    
+
+    newQueueList.splice(_selectedQueueRow, 0, addJobToList); //splice(startingIndex, deleteCount, item1, item2, ...)
+    const updatedQueue = newQueueList.map((task, index) => {
+        let updatedTask = {...task};
+        if (index > _selectedQueueRow) {
+            updatedTask.order = task.order + 1;
+        }
+        if (task.status === "Executing" && _selectedQueueRow === 0) {
+            updatedTask.status = "Idle";
+        }
+        return updatedTask;
+    });
+
+    _setSelectedQueueRow(_selectedQueueRow);
+    _setQueueTaskData(updatedQueue);
+}
 
 
 export default {
@@ -133,7 +175,8 @@ export default {
     getQueueStates,
     runButtonClicked,
     pauseButtonClicked,
-    abortJob
+    abortJob, 
+    addJob
 };
 
 
