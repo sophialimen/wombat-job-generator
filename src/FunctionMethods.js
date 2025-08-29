@@ -169,12 +169,43 @@ export const addJob = (_queueTaskData, _setQueueTaskData, _selectedQueueRow, _se
 };
 
 const moveUpQueue = (_queueTaskData, _setQueueTaskData, _selectedQueueRow, _setSelectedQueueRow) => {
-    //collect queuetask list , selectedrow, set selected row (to the new row), set queuetask list to update new list
 
     const oldIndex = _selectedQueueRow;
     const newIndex = oldIndex - 1;
 
     if (newIndex < 0) return;
+    if (_queueTaskData[0].status === "Executing" && newIndex === 0) return; //***improve: maybe add error message this move cannot happen for safety. pls change to idle before switch queue   
+
+    const newQueue = [..._queueTaskData];
+    const [moveSelectedTask] = newQueue.splice(oldIndex, 1); //"cut" selected task for the move. newQueue updated with removed item
+    
+    //if setting as first task - status must be Idle
+    if (newIndex === 0)
+    {
+        moveSelectedTask.status = "Idle";
+    }
+
+    
+    
+    newQueue.splice(newIndex, 0, moveSelectedTask);         //move selected task into new index 
+
+    const updatedQueue = newQueue.map((task, index) => ({
+        ...task,
+        order: index + 1,
+    }));
+
+    _setSelectedQueueRow(newIndex);
+    _setQueueTaskData(updatedQueue);
+
+};
+
+const moveDownQueue = (_queueTaskData, _setQueueTaskData, _selectedQueueRow, _setSelectedQueueRow) => {
+
+    const oldIndex = _selectedQueueRow;
+    const newIndex = oldIndex + 1;    
+
+    if (newIndex >= _queueTaskData.length) return;
+    if (_queueTaskData[0].status === "Executing" && oldIndex=== 0) return; //***improve: maybe add error message this move cannot happen for safety. pls change to idle before switch queue   
 
     const newQueue = [..._queueTaskData];
     const [moveSelectedTask] = newQueue.splice(oldIndex, 1); //"cut" selected task for the move. newQueue updated with removed item
@@ -183,16 +214,10 @@ const moveUpQueue = (_queueTaskData, _setQueueTaskData, _selectedQueueRow, _setS
     const updatedQueue = newQueue.map((task, index) => ({
         ...task,
         order: index + 1,
-        status: task.order === 1 ? "Idle" : task.status
     }));
 
     _setSelectedQueueRow(newIndex);
     _setQueueTaskData(updatedQueue);
-
-};
-
-const moveDownQueue = () => {
-
 
 };
 

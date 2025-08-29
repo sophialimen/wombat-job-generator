@@ -86,7 +86,7 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                                                     <button 
                                                     className='button-arrow'
                                                     disabled={val.order===queueTaskData.length}
-                                                    onClick={()=>FunctionMethods.moveDownQueue()}
+                                                    onClick={()=>FunctionMethods.moveDownQueue(queueTaskData, setQueueTaskData, selectedQueueRow, setSelectedQueueRow)}
                                                     >
                                                         <FaCaretDown /></button>
                                                 </div>
