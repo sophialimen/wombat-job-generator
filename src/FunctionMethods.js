@@ -166,8 +166,35 @@ export const addJob = (_queueTaskData, _setQueueTaskData, _selectedQueueRow, _se
 
     _setSelectedQueueRow(_selectedQueueRow);
     _setQueueTaskData(updatedQueue);
-}
+};
 
+const moveUpQueue = (_queueTaskData, _setQueueTaskData, _selectedQueueRow, _setSelectedQueueRow) => {
+    //collect queuetask list , selectedrow, set selected row (to the new row), set queuetask list to update new list
+
+    const oldIndex = _selectedQueueRow;
+    const newIndex = oldIndex - 1;
+
+    if (newIndex < 0) return;
+
+    const newQueue = [..._queueTaskData];
+    const [moveSelectedTask] = newQueue.splice(oldIndex, 1); //"cut" selected task for the move. newQueue updated with removed item
+    newQueue.splice(newIndex, 0, moveSelectedTask);         //move selected task into new index 
+
+    const updatedQueue = newQueue.map((task, index) => ({
+        ...task,
+        order: index + 1,
+        status: task.order === 1 ? "Idle" : task.status
+    }));
+
+    _setSelectedQueueRow(newIndex);
+    _setQueueTaskData(updatedQueue);
+
+};
+
+const moveDownQueue = () => {
+
+
+};
 
 export default {
     getQueueButtonStates,
@@ -176,7 +203,9 @@ export default {
     runButtonClicked,
     pauseButtonClicked,
     abortJob, 
-    addJob
+    addJob,
+    moveUpQueue,
+    moveDownQueue
 };
 
 

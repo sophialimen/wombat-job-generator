@@ -77,8 +77,18 @@ const Menu = ({ selectedRobot, selectedBuilding, selectedSite, selectedRegion })
                                             
                                             <td className='td-queue-arrow'>
                                                 <div className="arrow-container">
-                                                    <button className='button-arrow'><FaCaretUp /></button>
-                                                    <button className='button-arrow'><FaCaretDown /></button>
+                                                    <button 
+                                                    className='button-arrow'
+                                                    disabled={val.order===1}
+                                                    onClick={()=>FunctionMethods.moveUpQueue(queueTaskData, setQueueTaskData, selectedQueueRow, setSelectedQueueRow)}
+                                                    >
+                                                        <FaCaretUp /></button>
+                                                    <button 
+                                                    className='button-arrow'
+                                                    disabled={val.order===queueTaskData.length}
+                                                    onClick={()=>FunctionMethods.moveDownQueue()}
+                                                    >
+                                                        <FaCaretDown /></button>
                                                 </div>
                                             </td>
                                         </tr>
